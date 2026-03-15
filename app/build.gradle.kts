@@ -17,8 +17,21 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    // Mendefinisikan dimensi flavor
+    flavorDimensions.add("abi")
+
+    productFlavors {
+        create("v7a") {
+            dimension = "abi"
+            ndk { abiFilters.add("armeabi-v7a") }
+        }
+        create("v8a") {
+            dimension = "abi"
+            ndk { abiFilters.add("arm64-v8a") }
+        }
     }
 
     buildTypes {
@@ -37,6 +50,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+}
 }
 
 dependencies {

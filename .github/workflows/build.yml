@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # paksa semua actions pakai Node 24
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4   # versi terbaru v4 sudah support Node 24
+        uses: actions/checkout@v4
 
       - name: Setup JDK
         uses: actions/setup-java@v4
@@ -27,11 +27,13 @@ jobs:
       - name: Grant Gradle permission
         run: chmod +x gradlew
 
-      - name: Build Debug APK
+      - name: Build Debug APKs
+        # Ini bakal build semua flavor yang kita buat tadi
         run: ./gradlew assembleDebug
 
-      - name: Upload APK
+      - name: Upload All APKs
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: debug-apks
+          # Path ini mencakup hasil dari kedua flavor
+          path: app/build/outputs/apk/**/*.apk
